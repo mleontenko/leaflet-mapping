@@ -111,13 +111,20 @@
 	function addPopup(layer) {
 		var content = document.createElement("div");
 		content.innerHTML = `<label>Vrsta objekta:</label>
-							 <select>
+							 <select id="select-type" onchange="getval(this);">
 							  <option value="trgovina">Trgovina</option>
 							  <option value="restoran">Restoran</option>
-							 </select>`;		
+							 </select>
+                             <div id="popup-form"></div>`;		
 		
 		layer.bindPopup(content).openPopup();
 	}
+
+    function getval(sel){
+        var form = sel.value;
+        document.getElementById("popup-form").innerHTML = sel.value;
+    }
+    
 
 </script>
 </body>
