@@ -62,13 +62,7 @@
             attribution: 'google'
         })
     }, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: false }).addTo(map);
-    map.addControl(new L.Control.Draw({
-        edit: {
-            featureGroup: drawnItems,
-            poly: {
-                allowIntersection: false
-            }
-        },
+    map.addControl(new L.Control.Draw({        
         draw: {
             polygon: {
                 allowIntersection: false,
@@ -79,6 +73,11 @@
 			circlemarker: false
         }
     }));
+	
+	map.on(L.Draw.Event.DRAWSTART, function (event) {
+		drawnItems.clearLayers();
+        console.log('drawstart');
+    });
 
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;
@@ -87,7 +86,9 @@
     });
 	
 	L.easyButton( '<span title="Save">&#10004;</span>', function(){
-	  alert('you just clicked the save button');
+	  //alert('you just clicked the save button');
+	  var geojson = drawnItems.toGeoJSON();
+	  console.log(geojson);
 	}).addTo(map);
 
 </script>
