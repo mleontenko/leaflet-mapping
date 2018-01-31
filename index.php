@@ -43,6 +43,9 @@
     <script src="leaflet-draw/src/edit/handler/Edit.Marker.js"></script>
     <script src="leaflet-draw/src/edit/handler/Edit.CircleMarker.js"></script>
     <script src="leaflet-draw/src/edit/handler/Edit.Circle.js"></script>
+	
+	<link rel="stylesheet" href="leaflet-easy-button/src/easy-button.css"/>
+	<script src="leaflet-easy-button/src/easy-button.js"></script>
 </head>
 <body>
 <div id="map" style="width: 800px; height: 600px; border: 1px solid #ccc"></div>
@@ -82,6 +85,10 @@
 
         drawnItems.addLayer(layer);
     });
+	
+	L.easyButton( '<span title="Save">&#10004;</span>', function(){
+	  alert('you just clicked the save button');
+	}).addTo(map);
 
 </script>
 </body>
