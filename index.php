@@ -2,6 +2,11 @@
 <html>
 <head>
     <title>Leaflet.draw vector editing handlers</title>
+	
+	<script
+	  src="http://code.jquery.com/jquery-3.3.1.js"
+	  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	  crossorigin="anonymous"></script>
 
     <script src="leaflet/leaflet-src.js"></script>
     <link rel="stylesheet" href="leaflet/leaflet.css"/>
@@ -99,17 +104,18 @@
 	  //alert('you just clicked the save button');
 	  var geojson = drawnItems.toGeoJSON();
 	  console.log(geojson);
+
+	  drawnItems.clearLayers();
 	}).addTo(map);
 	
 	function addPopup(layer) {
-	  var content = document.createElement("textarea");
-		content.addEventListener("keyup", function () {
-		  layer.feature.properties.desc = content.value;
-		});
-		layer.on("popupopen", function () {
-		  content.value = layer.feature.properties.desc;
-		  content.focus();
-		});
+		var content = document.createElement("div");
+		content.innerHTML = `<label>Vrsta objekta:</label>
+							 <select>
+							  <option value="trgovina">Trgovina</option>
+							  <option value="restoran">Restoran</option>
+							 </select>`;		
+		
 		layer.bindPopup(content).openPopup();
 	}
 
