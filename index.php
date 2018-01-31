@@ -74,6 +74,7 @@
         }
     }));
 	
+		
 	map.on(L.Draw.Event.DRAWSTART, function (event) {
 		drawnItems.clearLayers();
         console.log('drawstart');
@@ -81,8 +82,17 @@
 
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;
+		
+		feature = layer.feature = layer.feature || {};
 
+		feature.type = feature.type || "Feature";
+		var props = feature.properties = feature.properties || {};
+		props.desc = null;
+		props.image = null;
+		
         drawnItems.addLayer(layer);
+		
+		addPopup(layer);
     });
 	
 	L.easyButton( '<span title="Save">&#10004;</span>', function(){
@@ -90,6 +100,18 @@
 	  var geojson = drawnItems.toGeoJSON();
 	  console.log(geojson);
 	}).addTo(map);
+	
+	function addPopup(layer) {
+	  var content = document.createElement("textarea");
+		content.addEventListener("keyup", function () {
+		  layer.feature.properties.desc = content.value;
+		});
+		layer.on("popupopen", function () {
+		  content.value = layer.feature.properties.desc;
+		  content.focus();
+		});
+		layer.bindPopup(content).openPopup();
+	}
 
 </script>
 </body>
