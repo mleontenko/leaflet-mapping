@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +20,7 @@
     <script src="leaflet-draw/src/ext/Polyline.Intersect.js"></script>
     <script src="leaflet-draw/src/ext/TouchEvents.js"></script>
 
-    <script src="leaflet-draw/src/draw/DrawToolbar.js"></script>
+    <script src="leaflet-draw/src/draw/DrawToolbar.js"></script>	
     <script src="leaflet-draw/src/draw/handler/Draw.Feature.js"></script>
     <script src="leaflet-draw/src/draw/handler/Draw.SimpleShape.js"></script>
     <script src="leaflet-draw/src/draw/handler/Draw.Polyline.js"></script>
@@ -71,7 +70,10 @@
             polygon: {
                 allowIntersection: false,
                 showArea: true
-            }
+            },
+			rectangle: false,
+			circle: false,
+			circlemarker: false
         }
     }));
 
