@@ -66,7 +66,7 @@
         "google": L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
             attribution: 'google'
         })
-    }, { 'drawlayer': drawnItems }, { position: 'topleft', collapsed: false }).addTo(map);
+    }, { 'drawlayer': drawnItems }/*, { position: 'topleft', collapsed: false }*/).addTo(map);
     map.addControl(new L.Control.Draw({        
         draw: {
             polygon: {
