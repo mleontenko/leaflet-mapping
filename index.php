@@ -61,12 +61,15 @@
             osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
             map = new L.Map('map', { center: new L.LatLng(51.505, -0.04), zoom: 13 }),
             drawnItems = L.featureGroup().addTo(map);
+
+    // Layer control + layers definition
     L.control.layers({
         'osm': osm.addTo(map),
         "google": L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
             attribution: 'google'
         })
     }, { 'drawlayer': drawnItems }/*, { position: 'topleft', collapsed: false }*/).addTo(map);
+    
     map.addControl(new L.Control.Draw({        
         draw: {
             polygon: {
@@ -79,12 +82,12 @@
         }
     }));
 	
-		
+	// Clear previous drawn objects 
 	map.on(L.Draw.Event.DRAWSTART, function (event) {
 		drawnItems.clearLayers();
-        console.log('drawstart');
     });
 
+    // Event that fires after an object is drawn (adds popup)
     map.on(L.Draw.Event.CREATED, function (event) {
         var layer = event.layer;
 		
@@ -100,6 +103,7 @@
 		addPopup(layer);
     });
 	
+    // Custom button functions
 	L.easyButton( '<span title="Save">&#10004;</span>', function(){
 	  //alert('you just clicked the save button');
 	  var geojson = drawnItems.toGeoJSON();
@@ -108,6 +112,7 @@
 	  drawnItems.clearLayers();
 	}).addTo(map);
 	
+    // Popup function (called in CREATED event)
 	function addPopup(layer) {
 		var content = document.createElement("div");
 		content.innerHTML = `<label>Vrsta objekta:</label>
@@ -120,9 +125,23 @@
 		layer.bindPopup(content).openPopup();
 	}
 
+    // Change popup content depending on selected 
     function getval(sel){
         var form = sel.value;
-        document.getElementById("popup-form").innerHTML = sel.value;
+        if(form == 'trgovina') {
+            var formHTML = `<input type="hidden" id="vrsta" value="trgovina">
+                            <input type="text" id="name">
+                            <input type="text" id="shop">
+                            <button type="button" onclick="buttonSave();">Save</button>`;
+            document.getElementById("popup-form").innerHTML = formHTML;
+        }else if (form == 'restoran') {
+
+        }
+        //document.getElementById("popup-form").innerHTML = sel.value;
+    }
+
+    function buttonSave() {
+        console.log('button clicked');
     }
     
 
