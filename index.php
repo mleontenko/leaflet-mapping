@@ -115,28 +115,41 @@
     // Popup function (called in CREATED event)
 	function addPopup(layer) {
 		var content = document.createElement("div");
-		content.innerHTML = `<label>Vrsta objekta:</label>
-							 <select id="select-type" onchange="getval(this);">
-                              <option value="unknown">--Odaberi--</option>
-							  <option value="trgovina">Trgovina</option>
-							  <option value="restoran">Restoran</option>
-							 </select>
-                             <div id="popup-form"></div>`;		
+
+        // Convert geometry to GeoJSON to detect geometry type (point, polyline or polygon)
+        var geojson = drawnItems.toGeoJSON();
+
+        // Personalized popup depending on drawn geometry type
+        if((geojson.features[0].geometry.type) == 'Point') {
+            content.innerHTML = `<label>Vrsta objekta:</label>
+                                <select id="select-type" onchange="getval(this);" >
+                                    <option disabled="true" selected="selected">--Odaberi--</option>
+                                    <option value="trgovina">Trgovina</option>
+                                    <option value="restoran">Restoran</option>
+                                </select>
+                                <div id="popup-form"></div>`;
+        }			
 		
 		layer.bindPopup(content).openPopup();
 	}
 
-    // Change popup content depending on selected 
+    // Change popup content depending on selected feature type
     function getval(sel){
         var form = sel.value;
         if(form == 'trgovina') {
             var formHTML = `<input type="hidden" id="vrsta" value="trgovina">
+                            <label>Naziv trgovine:</label>
                             <input type="text" id="name">
+                            <label>Vrsta trgovine:</label>
                             <input type="text" id="shop">
-                            <button type="button" onclick="buttonSave();">Save</button>`;
+                            <button type="button" onclick="saveTrgovina();">Save</button>`;
             document.getElementById("popup-form").innerHTML = formHTML;
         }else if (form == 'restoran') {
-
+            var formHTML = `<input type="hidden" id="vrsta" value="restoran">
+                            <label>Naziv restorana:</label>
+                            <input type="text" id="name">                            
+                            <button type="button" onclick="saveRestoran();">Save</button>`;
+            document.getElementById("popup-form").innerHTML = formHTML;
         }
         //document.getElementById("popup-form").innerHTML = sel.value;
     }
