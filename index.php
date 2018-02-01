@@ -59,7 +59,7 @@
     var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
-            map = new L.Map('map', { center: new L.LatLng(51.505, -0.04), zoom: 13 }),
+            map = new L.Map('map', { center: new L.LatLng(42.647, 18.101), zoom: 13 }),
             drawnItems = L.featureGroup().addTo(map);
 
     // Layer control + layers definition
@@ -117,6 +117,7 @@
 		var content = document.createElement("div");
 		content.innerHTML = `<label>Vrsta objekta:</label>
 							 <select id="select-type" onchange="getval(this);">
+                              <option value="unknown">--Odaberi--</option>
 							  <option value="trgovina">Trgovina</option>
 							  <option value="restoran">Restoran</option>
 							 </select>
