@@ -154,8 +154,19 @@
         //document.getElementById("popup-form").innerHTML = sel.value;
     }
 
-    function buttonSave() {
-        console.log('button clicked');
+    function saveTrgovina() {
+        var name = document.getElementById("name").value;
+        var shop = document.getElementById("shop").value;
+
+        var geojson = drawnItems.toGeoJSON();
+        var geometry = geojson.features[0].geometry;
+        
+        // Append EPSG to geometry 
+        geometry.crs = {"type":"name","properties":{"name":"EPSG:4326"}}; 
+        
+        console.log(name);
+        console.log(shop);
+        console.log(JSON.stringify(geometry));
     }
     
 
